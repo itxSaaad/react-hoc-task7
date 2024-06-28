@@ -1,6 +1,6 @@
 import './App.css';
-import TodoList from './components/TodoList';
-import UsersList from './components/UsersList';
+import SearchTodos from './components/TodoList';
+import SearchUsers from './components/UsersList';
 
 function App() {
   return (
@@ -8,10 +8,10 @@ function App() {
       <h2>Higher Order Component</h2>
       <div className="section">
         <div>
-          <UsersList />
+          <SearchUsers />
         </div>
         <div>
-          <TodoList />
+          <SearchTodos />
         </div>
       </div>
     </div>

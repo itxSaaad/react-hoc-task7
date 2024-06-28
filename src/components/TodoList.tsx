@@ -3,34 +3,36 @@ interface Todo {
   title: string;
 }
 
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+// import axios from 'axios';
+// import { useEffect, useState } from 'react';
 
-export default function TodoList() {
-  const [todos, setTodos] = useState([]);
-  const [term, setTerm] = useState('');
+import Hoc from './Hoc';
 
-  useEffect(() => {
-    const fetchTodos = async () => {
-      const response = await axios.get(
-        'https://jsonplaceholder.typicode.com/todos'
-      );
-      setTodos(response.data);
-    };
-    fetchTodos();
-  }, []);
+export function TodoList({ data }: { data: Todo[] }) {
+  //   const [todos, setTodos] = useState([]);
+  //   const [term, setTerm] = useState('');
 
-  const filteredTodos = todos
-    .filter(({ title }) => {
-      return title.indexOf(term) >= 0;
-      //   return name.toLowerCase().includes(term.toLowerCase());
-    })
-    .slice(0, 10)
-    .map((todo: Todo) => {
-      return todo;
-    });
+  //   useEffect(() => {
+  //     const fetchTodos = async () => {
+  //       const response = await axios.get(
+  //         'https://jsonplaceholder.typicode.com/todos'
+  //       );
+  //       setTodos(response.data);
+  //     };
+  //     fetchTodos();
+  //   }, []);
 
-  const renderTodos = filteredTodos.map((todo: Todo) => {
+  //   const filteredTodos = todos
+  //     .filter(({ title }) => {
+  //       return title.indexOf(term) >= 0;
+  //       //   return name.toLowerCase().includes(term.toLowerCase());
+  //     })
+  //     .slice(0, 10)
+  //     .map((todo: Todo) => {
+  //       return todo;
+  //     });
+
+  const renderTodos = data.map((todo: Todo) => {
     return (
       <div key={todo.id}>
         <p>
@@ -41,15 +43,10 @@ export default function TodoList() {
   });
 
   return (
-    <div>
-      <h2>Todos List</h2>
-      <input
-        type="text"
-        value={term}
-        onChange={(e) => setTerm(e.target.value)}
-        placeholder="Search users..."
-      />
-      {renderTodos.length > 0 ? renderTodos : <p>No Todos found</p>}
-    </div>
+    <div>{renderTodos.length > 0 ? renderTodos : <p>No Todos found</p>}</div>
   );
 }
+
+const SearchTodos = Hoc({ WrappedComponent: TodoList, entity: 'todos' });
+
+export default SearchTodos;
